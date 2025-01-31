@@ -27,7 +27,7 @@ window.addEventListener('scroll', () => {
         if (currentScroll > lastScroll) { // Scrolling down
             header.style.transform = 'translateY(-100%)';
         } else { // Scrolling up
-            header.style.transform = 'translateY(0)';
+            header.style.transform = 'translateY(-30%)';
         }
     } else {
         header.classList.remove('scrolled');
