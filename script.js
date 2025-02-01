@@ -75,7 +75,7 @@ document.getElementById('contact-form').addEventListener('submit', function(even
   event.preventDefault();
   
   // Replace 'YOUR_SERVICE_ID' and 'YOUR_TEMPLATE_ID' with your actual Service ID and Template ID from EmailJS
-  emailjs.sendForm('service_vzy41ym', 'template_xprqy1i', this)
+  emailjs.sendForm('service_mhs41tn', 'template_xprqy1i', this)
       .then(function() {
           alert('Message sent successfully!');
       }, function(error) {
