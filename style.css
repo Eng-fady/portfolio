@@ -907,7 +907,7 @@ input:checked + .slider:before {
 }
 
 .nav-btn {
-    padding: 1rem 1rem;
+    padding: 1rem 0.5rem;
     border-radius: 25px;
     text-decoration: none;
     font-weight: 600;
