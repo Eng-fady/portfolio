@@ -907,7 +907,7 @@ input:checked + .slider:before {
 }
 
 .nav-btn {
-    padding: 1rem 0.5rem;
+    padding: 1rem 4rem;
     border-radius: 25px;
     text-decoration: none;
     font-weight: 600;
@@ -937,12 +937,48 @@ input:checked + .slider:before {
 @media (max-width: 768px) {
     .page-navigation {
         flex-direction: column;
-        gap: 1rem;
+        gap: 1.5rem;
+        margin: 3rem -2rem; /* Negative margin to counter main padding */
+        padding: 2rem 2rem;
+        border-top: none;
     }
-    
+
     .nav-btn {
-        width: 100%;
+        width: calc(100% + 2rem); /* Expand beyond container padding */
+        margin: 0 -1rem !important; /* Remove side margins */
+        border-radius: 0;
+        padding: 1.2rem 1.5rem;
         justify-content: center;
+        box-shadow: none;
+    }
+
+    .nav-btn.prev-btn {
+        border-radius: 0 25px 25px 0;
+        justify-content: flex-start;
+    }
+
+    .nav-btn.next-btn {
+        border-radius: 25px 0 0 25px;
+        justify-content: flex-end;
+    }
+
+    .nav-btn:hover {
+        transform: none;
+        box-shadow: none;
+    }
+}
+
+@media (max-width: 576px) {
+    .page-navigation {
+        margin: 3rem -0rem;
+        padding: 2rem 1rem;
+    }
+
+    .nav-btn {
+        width: calc(100% + 1rem);
+        margin: 0 -1.5rem !important;
+        font-size: 0.95rem;
+        padding: 1rem 1.2rem;
     }
 }
 
