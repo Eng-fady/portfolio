@@ -934,6 +934,14 @@ input:checked + .slider:before {
     box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
+main {
+    padding-bottom: 100px; /* Prevent footer overlap */
+}
+
+footer {
+    z-index: 1000; /* Keep footer above content */
+}
+
 @media (max-width: 768px) {
     .page-navigation {
         flex-direction: column;
@@ -980,12 +988,11 @@ input:checked + .slider:before {
         font-size: 0.95rem;
         padding: 1rem 1.2rem;
     }
-}
-
-main {
-    padding-bottom: 100px; /* Prevent footer overlap */
-}
-
-footer {
-    z-index: 1000; /* Keep footer above content */
+    main {
+        padding-bottom: 0px; 
+    }
+    
+    footer {
+        z-index: 1000;
+    }
 }
