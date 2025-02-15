@@ -64,12 +64,10 @@ function switchTheme(e) {
 toggleSwitch.addEventListener('change', switchTheme);
 
 // Check for saved theme
-const currentTheme = localStorage.getItem('theme');
-if (currentTheme) {
-    document.documentElement.setAttribute('data-theme', currentTheme);
-    if (currentTheme === 'dark') {
-        toggleSwitch.checked = true;
-    }
+const currentTheme = localStorage.getItem('theme') || 'light'; // Default to light
+document.documentElement.setAttribute('data-theme', currentTheme);
+if (currentTheme === 'dark') {
+    toggleSwitch.checked = true;
 }
 document.getElementById('contact-form').addEventListener('submit', function(event) {
   event.preventDefault();
