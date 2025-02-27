@@ -1,83 +1,80 @@
-const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
+document.addEventListener('DOMContentLoaded', () => {
+    // Theme Toggle
+    const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    if (currentTheme === 'dark' && toggleSwitch) {
+        toggleSwitch.checked = true;
+    }
 
-// Mobile Menu Toggle
-document.querySelector('.hamburger').addEventListener('click', function() {
-    document.querySelector('.nav-container').classList.toggle('active');
-});
+    function switchTheme(e) {
+        const theme = e.target.checked ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+    }
 
-// Close menu when clicking outside
-document.addEventListener('click', function(event) {
-    const navContainer = document.querySelector('.nav-container');
+    if (toggleSwitch) {
+        toggleSwitch.addEventListener('change', switchTheme);
+    }
+
+    // Mobile Menu Toggle
     const hamburger = document.querySelector('.hamburger');
-    
-    if (!navContainer.contains(event.target) && !hamburger.contains(event.target)) {
-        navContainer.classList.remove('active');
+    const navContainer = document.querySelector('.nav-container');
+
+    if (hamburger && navContainer) {
+        hamburger.addEventListener('click', () => {
+            navContainer.classList.toggle('active');
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (event) => {
+            if (!navContainer.contains(event.target) && !hamburger.contains(event.target)) {
+                navContainer.classList.remove('active');
+            }
+        });
     }
-});
 
-// Header Scroll Effect
-let lastScroll = 0;
-const header = document.querySelector('header');
+    // Header Scroll Effect
+    let lastScroll = 0;
+    const header = document.querySelector('header');
 
-window.addEventListener('scroll', () => {
-    const currentScroll = window.pageYOffset;
-    
-    if (currentScroll > 100) { // Scroll down 100px
-        header.classList.add('scrolled');
-        if (currentScroll > lastScroll) { // Scrolling down
-            header.style.transform = 'translateY(-100%)';
-        } else { // Scrolling up
-            header.style.transform = 'translateY(-30%)';
+    function handleScroll() {
+        const currentScroll = window.pageYOffset;
+        
+        if (currentScroll > 100) {
+            header.classList.add('scrolled');
+            header.style.transform = currentScroll > lastScroll ? 'translateY(-100%)' : 'translateY(-30%)';
+        } else {
+            header.classList.remove('scrolled');
+            header.style.transform = 'translateY(0)';
         }
-    } else {
-        header.classList.remove('scrolled');
-        header.style.transform = 'translateY(0)';
+        
+        lastScroll = currentScroll;
     }
-    
-    lastScroll = currentScroll;
-});
 
-// Ensure header reappears when reaching top
-window.addEventListener('scroll', () => {
-    if (window.pageYOffset === 0) {
-        header.classList.remove('scrolled');
-        header.style.transform = 'translateY(0)';
+    if (header) {
+        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('load', () => {
+            header.style.transform = 'translateY(0)';
+            document.documentElement.style.scrollBehavior = 'smooth';
+        });
+    }
+
+    // Contact Form Submission with EmailJS
+    const contactForm = document.getElementById('contact-form');
+
+    if (contactForm) {
+        contactForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            emailjs.sendForm('service_mhs41tn', 'template_xprqy1i', contactForm)
+                .then(() => {
+                    alert('Message sent successfully!');
+                })
+                .catch(() => {
+                    alert('Failed to send the message. Please try again later.');
+                });
+        });
     }
 });
-
-// Reset on page load
-window.addEventListener('load', () => {
-    header.style.transform = 'translateY(0)';
-    document.documentElement.style.scrollBehavior = 'smooth';
-});
-
-function switchTheme(e) {
-    if (e.target.checked) {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        localStorage.setItem('theme', 'dark');
-    } else {
-        document.documentElement.setAttribute('data-theme', 'light');
-        localStorage.setItem('theme', 'light');
-    }
-}
-
-toggleSwitch.addEventListener('change', switchTheme);
-
-// Check for saved theme
-const currentTheme = localStorage.getItem('theme') || 'light'; // Default to light
-document.documentElement.setAttribute('data-theme', currentTheme);
-if (currentTheme === 'dark') {
-    toggleSwitch.checked = true;
-}
-document.getElementById('contact-form').addEventListener('submit', function(event) {
-  event.preventDefault();
-  
-  // Replace 'YOUR_SERVICE_ID' and 'YOUR_TEMPLATE_ID' with your actual Service ID and Template ID from EmailJS
-  emailjs.sendForm('service_mhs41tn', 'template_xprqy1i', this)
-      .then(function() {
-          alert('Message sent successfully!');
-      }, function(error) {
-          alert('Failed to send the message. Please try again later.');
-      });
-});
-
